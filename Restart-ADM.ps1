@@ -670,6 +670,7 @@ try {
     # Stop the processes found above forcefully without any confirmation
     Get-Process ADM.TrayApp, AthenanetPerformanceMonitor, BurroughsCheckScanner | 
     Stop-Process -Force -Confirm:$false
+    Start-Sleep -Seconds 2
 
 }
 catch {
