@@ -687,4 +687,4 @@ invoke-ascurrentuser -scriptblock {
     }
 }
 
-exit
+exit 0
