@@ -1,4 +1,4 @@
-$LogPath = "$env:TEMP\Restart-ADM.log"
+$LogPath = "c:\Windows\Temp\VTS\ADM\Restart-ADM.log"
 
 $script:source = @"
 using Microsoft.Win32.SafeHandles;
