@@ -555,15 +555,12 @@ namespace RunAsUser
     }
 }
 "@
-$Public  = @(Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue)
-foreach ($import in @($Public))
-{
-    try
-    {
+$Public = @(Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue)
+foreach ($import in @($Public)) {
+    try {
         . $import.FullName
     }
-    catch
-    {
+    catch {
         Write-Error -Message "Failed to import function $($import.FullName): $_"
     }
 }
@@ -665,7 +662,6 @@ function Write-Log {
 
 # Try block for error handling
 try {
-
     # Get the processes for ADM.TrayApp and AthenanetPerformanceMonitor
     # Stop the processes found above forcefully without any confirmation
     Get-Process ADM.TrayApp, AthenanetPerformanceMonitor, BurroughsCheckScanner | 
@@ -674,44 +670,20 @@ try {
 
 }
 catch {
-
     # Output error message
     Write-Log -Message "Error stopping processes: $_"
 }
 
 # Invoke the script block as the current user
 invoke-ascurrentuser -scriptblock { 
-
-    # Define a list of athena apps' executable file paths
-    $athenaApps = @( 
-        Get-ChildItem "$env:localappdata\athenahealth, Inc\*\modules\CoreModule\ADM.TrayApp.exe" |
-        Sort-Object FullName |
-        Select-Object -Expand FullName -Last 1
-        Get-ChildItem "$env:localappdata\athenahealth, Inc\*\modules\AthenanetPerformanceMonitor\AthenanetPerformanceMonitor.exe" |
-        Sort-Object FullName |
-        Select-Object -Expand FullName -Last 1
-        Get-ChildItem "$env:localappdata\athenahealth, Inc\*\modules\BurroughsCheckScanner\BurroughsCheckScanner.exe" |
-        Sort-Object FullName |
-        Select-Object -Expand FullName -Last 1
-    )
-
-    if ($null -eq $athenaApps){Write-Log -Message "User apps not found in AppData."}
-    
-    # For each app in the list of athena apps
-    Foreach ($app in $athenaApps) { 
-
-        # Try block for error handling
-        try {
-
-            # Start the app using its file path
-            Start-Process -FilePath $app 
-
-        }
-        catch {
-
-            # Output error message
-            Write-Log -Message "Error starting process $app`: $_"
-        }
+    # Try block for error handling
+    try {
+        # Start the app using its file path
+        & "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\athenahealth, Inc\athenaNet Device Manager\athenaNet Device Manager.lnk"
+    }
+    catch {
+        # Output error message
+        Write-Log -Message "Error starting process $app`: $_"
     }
 }
 
