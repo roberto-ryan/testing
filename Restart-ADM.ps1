@@ -664,7 +664,7 @@ function Write-Log {
 try {
     # Get the processes for ADM.TrayApp and AthenanetPerformanceMonitor
     # Stop the processes found above forcefully without any confirmation
-    Get-Process ADM.TrayApp, AthenanetPerformanceMonitor, BurroughsCheckScanner | 
+    Get-Process ADM.TrayApp |
     Stop-Process -Force -Confirm:$false
     Start-Sleep -Seconds 2
 
@@ -687,4 +687,4 @@ invoke-ascurrentuser -scriptblock {
     }
 }
 
-exit 0
+exit
