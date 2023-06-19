@@ -683,7 +683,7 @@ invoke-ascurrentuser -scriptblock {
     }
     catch {
         # Output error message
-        Write-Log -Message "Error starting process $app`: $_"
+        Write-Log -Message "Error starting ADM: $_"
     }
 }
 
